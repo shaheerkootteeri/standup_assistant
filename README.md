@@ -1,1 +1,1 @@
-# standup_assistant
+# Standup Assistant
