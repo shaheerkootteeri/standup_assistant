@@ -3,89 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Standup Assistant</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        textarea {
-            width: 100%;
-            height: 100px;
-        }
-        button {
-            margin-top: 10px;
-        }
-    </style>
+    <title>Standup Updates</title>
 </head>
 <body>
-    <h1>Daily Standup Assistant</h1>
+    <h1>Standup Updates</h1>
+    <div id="updates-container"></div>
+    <form id="update-form">
+        <label for="user-id">User ID:</label>
+        <input type="text" id="user-id" name="user-id" required><br>
+        <label for="update">Update:</label>
+        <textarea id="update" name="update" required></textarea><br>
+        <label for="blockers">Blockers:</label>
+        <textarea id="blockers" name="blockers"></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
 
-    <h2>Submit Standup Update</h2>
-    <textarea id="updateText" placeholder="Enter your standup update"></textarea>
-    <br>
-    <textarea id="blockersText" placeholder="Enter any blockers"></textarea>
-    <br>
-    <button onclick="submitUpdate()">Submit Update</button>
-
-    <h2>Standup Updates</h2>
-    <ul id="updatesList"></ul>
-
-    <script>
-        function getUpdates() {
-            fetch('/getUpdates')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to fetch updates: ${response.statusText}`);
-                    }
-                    return response.json();
-                })
-                .then(data => displayUpdates(data))
-                .catch(error => console.error('Error fetching updates:', error));
-        }
-
-        function displayUpdates(updates) {
-            const updatesList = document.getElementById('updatesList');
-            updatesList.innerHTML = '';
-
-            updates.forEach(update => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${update.update} - Blockers: ${update.blockers}`;
-                updatesList.appendChild(listItem);
-            });
-        }
-
-        function submitUpdate() {
-            const updateText = document.getElementById('updateText').value;
-            const blockersText = document.getElementById('blockersText').value;
-
-            fetch('/submitUpdate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userId: 'user123', // Replace with actual user ID or implement user authentication
-                    update: updateText,
-                    blockers: blockersText,
-                }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to submit update: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                displayUpdates(data);
-                document.getElementById('updateText').value = '';
-                document.getElementById('blockersText').value = '';
-            })
-            .catch(error => console.error('Error submitting update:', error));
-        }
-
-        // Fetch updates on page load
-        getUpdates();
-    </script>
+    <script src="js\script.js"></script>
 </body>
 </html>
