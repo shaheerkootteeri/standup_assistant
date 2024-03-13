@@ -37,4 +37,4 @@ This is a simple web application for managing standup updates of team members. I
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+
